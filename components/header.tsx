@@ -3,21 +3,22 @@
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ChevronDown, Sprout } from "lucide-react"
+import Link from "next/link"
 
 export function Header() {
   return (
-    <header className="w-full bg-background border-b border-border">
+    <header className="w-full border-b border-border text-popover-foreground bg-[rgba(201,253,242,1)]">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-accent">
             <Sprout className="w-6 h-6 text-primary-foreground" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-foreground">Digital Kisan Mitra</h1>
             <p className="text-sm text-muted-foreground">किसान का डिजिटल साथी</p>
           </div>
-        </div>
+        </Link>
 
         {/* Navigation */}
         <div className="flex items-center gap-4">
@@ -38,12 +39,16 @@ export function Header() {
 
           {/* Auth Buttons */}
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
-              लॉगिन
-            </Button>
-            <Button size="sm" className="bg-secondary hover:bg-secondary/90">
-              रजिस्टर करें
-            </Button>
+            <Link href="/login">
+              <Button variant="outline" size="sm">
+                लॉगिन
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button size="sm" className="bg-secondary hover:bg-secondary/90">
+                रजिस्टर करें
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

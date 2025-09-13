@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react"
 
 export function HeroSection() {
   return (
-    <section className="w-full bg-gradient-to-b from-muted/30 to-background py-16 md:py-24">
+    <section className="w-full bg-gradient-to-b from-muted/30 to-background py-16 md:py-24 text-chart-1 bg-primary">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}

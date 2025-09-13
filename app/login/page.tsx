@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Leaf, Phone, MessageSquare } from "lucide-react"
+import { Leaf, Phone, MessageSquare, ArrowLeft, CheckCircle } from "lucide-react"
+import Link from "next/link"
 
 export default function LoginPage() {
   const [step, setStep] = useState<"phone" | "otp" | "details">("phone")
@@ -15,23 +16,57 @@ export default function LoginPage() {
   const [language, setLanguage] = useState("hi")
   const [soilType, setSoilType] = useState("")
   const [district, setDistrict] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleSendOTP = () => {
-    // Mock OTP sending
-    console.log("[v0] Sending OTP to:", phoneNumber)
-    setStep("otp")
+  const handleSendOTP = async () => {
+    setIsLoading(true)
+    setError("")
+    try {
+      // Mock OTP sending with delay
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+      console.log("[v0] Sending OTP to:", phoneNumber)
+      setStep("otp")
+    } catch (err) {
+      setError("Failed to send OTP. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const handleVerifyOTP = () => {
-    // Mock OTP verification
-    console.log("[v0] Verifying OTP:", otp)
-    setStep("details")
+  const handleVerifyOTP = async () => {
+    setIsLoading(true)
+    setError("")
+    try {
+      // Mock OTP verification with delay
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      console.log("[v0] Verifying OTP:", otp)
+      setStep("details")
+    } catch (err) {
+      setError("Invalid OTP. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const handleComplete = () => {
-    // Mock registration completion
-    console.log("[v0] Registration complete:", { phoneNumber, language, soilType, district })
-    // Redirect to dashboard or home
+  const handleComplete = async () => {
+    setIsLoading(true)
+    try {
+      // Mock registration completion
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      console.log("[v0] Registration complete:", { phoneNumber, language, soilType, district })
+      // Redirect to dashboard or home
+      window.location.href = "/"
+    } catch (err) {
+      setError("Registration failed. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleBack = () => {
+    if (step === "otp") setStep("phone")
+    if (step === "details") setStep("otp")
   }
 
   const getText = (key: string) => {
@@ -46,7 +81,7 @@ export default function LoginPage() {
         hi: "खेती को आसान बनाएं",
         en: "Making farming simple",
         te: "వ్యవసాయాన్ని సులభతరం చేయడం",
-        ta: "விவசாயத்தை எளிதாக்குதல்",
+        ta: "விவசాயத்தை எளிதாக்குதல்",
       },
       phoneLabel: {
         hi: "मोबाइल नंबर",
@@ -96,6 +131,18 @@ export default function LoginPage() {
         te: "పూర్తి చేయండి",
         ta: "முடிக்கவும்",
       },
+      back: {
+        hi: "वापस",
+        en: "Back",
+        te: "వెనుకకు",
+        ta: "பின்னால்",
+      },
+      resendOtp: {
+        hi: "OTP दोबारा भेजें",
+        en: "Resend OTP",
+        te: "OTP ను మళ్లీ పంపండి",
+        ta: "OTP ஐ மீண்டும் அனுப்பவும்",
+      },
     }
     return texts[key]?.[language] || texts[key]?.["en"] || key
   }
@@ -104,6 +151,21 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-orange-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl border-2 border-primary/20">
         <CardHeader className="text-center space-y-4">
+          <div className="flex items-center justify-between">
+            {step !== "phone" ? (
+              <Button variant="ghost" size="sm" onClick={handleBack} className="p-2">
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Link href="/">
+                <Button variant="ghost" size="sm" className="p-2">
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              </Link>
+            )}
+            <div className="flex-1" />
+          </div>
+
           <div className="flex justify-center">
             <div className="bg-primary/10 p-4 rounded-full">
               <Leaf className="h-12 w-12 text-primary" />
@@ -134,6 +196,10 @@ export default function LoginPage() {
             </Select>
           </div>
 
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">{error}</div>
+          )}
+
           {/* Phone Number Step */}
           {step === "phone" && (
             <div className="space-y-4">
@@ -156,9 +222,9 @@ export default function LoginPage() {
               <Button
                 onClick={handleSendOTP}
                 className="w-full h-12 text-base font-semibold"
-                disabled={phoneNumber.length < 10}
+                disabled={phoneNumber.length < 10 || isLoading}
               >
-                {getText("sendOtp")}
+                {isLoading ? "भेजा जा रहा है..." : getText("sendOtp")}
               </Button>
             </div>
           )}
@@ -187,9 +253,17 @@ export default function LoginPage() {
               <Button
                 onClick={handleVerifyOTP}
                 className="w-full h-12 text-base font-semibold"
-                disabled={otp.length !== 6}
+                disabled={otp.length !== 6 || isLoading}
               >
-                {getText("verifyOtp")}
+                {isLoading ? "सत्यापित हो रहा है..." : getText("verifyOtp")}
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleSendOTP}
+                className="w-full h-10 text-sm bg-transparent"
+                disabled={isLoading}
+              >
+                {getText("resendOtp")}
               </Button>
             </div>
           )}
@@ -197,6 +271,11 @@ export default function LoginPage() {
           {/* Additional Details Step */}
           {step === "details" && (
             <div className="space-y-4">
+              <div className="flex items-center justify-center space-x-2 text-green-600 mb-4">
+                <CheckCircle className="h-5 w-5" />
+                <span className="text-sm font-medium">Phone verified successfully!</span>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="soil" className="text-base font-medium">
                   {getText("soilType")}
@@ -229,17 +308,23 @@ export default function LoginPage() {
                 />
               </div>
 
-              <Button onClick={handleComplete} className="w-full h-12 text-base font-semibold">
-                {getText("complete")}
+              <Button onClick={handleComplete} className="w-full h-12 text-base font-semibold" disabled={isLoading}>
+                {isLoading ? "पूरा हो रहा है..." : getText("complete")}
               </Button>
             </div>
           )}
 
           {/* Progress Indicator */}
           <div className="flex justify-center space-x-2 pt-4">
-            <div className={`h-2 w-8 rounded-full ${step === "phone" ? "bg-primary" : "bg-primary/30"}`} />
-            <div className={`h-2 w-8 rounded-full ${step === "otp" ? "bg-primary" : "bg-primary/30"}`} />
-            <div className={`h-2 w-8 rounded-full ${step === "details" ? "bg-primary" : "bg-primary/30"}`} />
+            <div
+              className={`h-2 w-8 rounded-full transition-colors ${step === "phone" ? "bg-primary" : "bg-primary/30"}`}
+            />
+            <div
+              className={`h-2 w-8 rounded-full transition-colors ${step === "otp" ? "bg-primary" : "bg-primary/30"}`}
+            />
+            <div
+              className={`h-2 w-8 rounded-full transition-colors ${step === "details" ? "bg-primary" : "bg-primary/30"}`}
+            />
           </div>
         </CardContent>
       </Card>

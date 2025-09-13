@@ -5,20 +5,20 @@
 
 :root {
   /* Updated color scheme for agricultural theme with green and saffron colors */
-  --background: rgb(201, 253, 242); /* White background */
+  --background: rgb(133, 209, 209); /* White background */
   --foreground: oklch(0.25 0 0); /* Dark gray text */
   --card: oklch(0.99 0.02 85); /* Light yellow-green card background */
   --card-foreground: oklch(0.25 0 0); /* Dark text on cards */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.25 0 0);
   /* Updated primary color to darker green for better contrast */
-  --primary: rgb(76, 120, 45); /* Darker green primary color for better text contrast */
+  --primary: rgb(182, 242, 209); /* Darker green primary color for better text contrast */
   --primary-foreground: rgb(254, 253, 251); /* White text on primary */
-  --secondary: rgb(214, -56, -21); /* Saffron/orange secondary */
-  --secondary-foreground: rgb(98, 43, 98); /* White text on secondary */
+  --secondary: rgb(133, 209, 209); /* Saffron/orange secondary */
+  --secondary-foreground: rgb(0, 0, 0); /* White text on secondary */
   --muted: oklch(0.97 0.01 85); /* Very light green muted */
   --muted-foreground: oklch(0.45 0 0); /* Medium gray muted text */
-  --accent: rgb(214, 199, -56); /* Saffron accent */
+  --accent: rgb(74, 207, 56); /* Saffron accent */
   --accent-foreground: oklch(1 0 0); /* White text on accent */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
