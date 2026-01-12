@@ -27,6 +27,7 @@ alerts about adverse weather conditions like heavy rain or heatwaves, allowing
 farmers to take protective measures.
 •Voice-Enabled Interface: Develop a voice-activated assistant to help farmers with 
 low digital literacy navigate the app and access information in their local language.
+
 •Market Price Tracking: Provide real-time updates on local and national market 
 prices for various crops, helping farmers make informed decisions about when to sell 
 their produce.
