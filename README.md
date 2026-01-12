@@ -19,12 +19,15 @@ Your project is live at:
 
 •Personalized Advisory: Use location data, soil type, and weather forecasts to offer 
 tailored advice on crop selection, planting times, and optimal fertilizer use.
+
 •Pest and Disease Detection: Implement an AI model that identifies crop diseases 
 and pests from images uploaded by farmers, providing instant diagnosis and 
 recommended treatments.
+
 •Real-time Weather Alerts: Integrate with meteorological services to send timely 
 alerts about adverse weather conditions like heavy rain or heatwaves, allowing 
 farmers to take protective measures.
+
 •Voice-Enabled Interface: Develop a voice-activated assistant to help farmers with 
 low digital literacy navigate the app and access information in their local language.
 
